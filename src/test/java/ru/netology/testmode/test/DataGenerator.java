@@ -24,7 +24,7 @@ public class DataGenerator {
     private DataGenerator() {
     }
 
-    private static RegistrationData sendRequest(RegistrationData user) {
+    private static void sendRequest(RegistrationData user) {
         given()
                 .spec(requestSpec) // указываем, какую спецификацию используем
                 .body(user) // передаём в теле объект, который будет преобразован в JSON
@@ -32,7 +32,6 @@ public class DataGenerator {
                 .post("/api/system/users") // на какой путь, относительно BaseUri отправляем запрос
                 .then() // "тогда ожидаем"
                 .statusCode(200); // код 200 OK
-        return user;
     }
 
     public static String getRandomLogin() {
