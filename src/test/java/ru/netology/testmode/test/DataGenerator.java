@@ -51,16 +51,19 @@ public class DataGenerator {
         }
 
         public static RegistrationData getUser(String status) {
-//            RegistrationData user = new RegistrationData();
+           RegistrationData user = new RegistrationData(getRandomLogin(), getRandomPassword(), status);
 //            user.login = getRandomLogin();
 //            user.password = getRandomPassword();
 //            user.status = status;
-            return new RegistrationData(getRandomLogin(),getRandomPassword(), status);
+            return user;
         }
 
         public static RegistrationData getRegisteredUser(String status) {
+            RegistrationData registeredUser;
+            registeredUser = getUser(status);
+            sendRequest(registeredUser);
 //            sendRequest(getUser(status));
-            return sendRequest(getUser(status));
+            return registeredUser;
         }
     }
 
