@@ -12,6 +12,7 @@ public class BankLoginTest {
 
     @BeforeEach
     public void setup() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999/");
     }
 

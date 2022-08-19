@@ -5,7 +5,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import lombok.Data;
+import lombok.Value;
 
 import java.util.Locale;
 
@@ -24,7 +24,7 @@ public class DataGenerator {
     private DataGenerator() {
     }
 
-    private static void sendRequest(RegistrationData user) {
+    private static RegistrationData sendRequest(RegistrationData user) {
         given()
                 .spec(requestSpec) // указываем, какую спецификацию используем
                 .body(user) // передаём в теле объект, который будет преобразован в JSON
@@ -32,6 +32,7 @@ public class DataGenerator {
                 .post("/api/system/users") // на какой путь, относительно BaseUri отправляем запрос
                 .then() // "тогда ожидаем"
                 .statusCode(200); // код 200 OK
+        return user;
     }
 
     public static String getRandomLogin() {
@@ -50,22 +51,20 @@ public class DataGenerator {
         }
 
         public static RegistrationData getUser(String status) {
-            RegistrationData user = new RegistrationData();
-            user.login = getRandomLogin();
-            user.password = getRandomPassword();
-            user.status = status;
-            return user;
+//            RegistrationData user = new RegistrationData();
+//            user.login = getRandomLogin();
+//            user.password = getRandomPassword();
+//            user.status = status;
+            return new RegistrationData(getRandomLogin(),getRandomPassword(), status);
         }
 
         public static RegistrationData getRegisteredUser(String status) {
-            RegistrationData registeredUser = new RegistrationData();
-            registeredUser = getUser(status);
-            sendRequest(registeredUser);
-            return registeredUser;
+//            sendRequest(getUser(status));
+            return sendRequest(getUser(status));
         }
     }
 
-    @Data
+    @Value
     public static class RegistrationData {
         String login;
         String password;
